@@ -26,6 +26,6 @@ def menu():
         elif opcion == "4":
             mostrar_viajes(viajes)
         elif opcion == "5":
-            recorre == False
+            recorre = False
 
 menu()
