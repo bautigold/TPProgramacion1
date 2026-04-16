@@ -39,6 +39,9 @@ def mostrar_viajes(viajes):
                 f"Precio: ${datos['precio']} | Plazas: {datos['plazas']}")
 
 def buscar_viaje(viajes, id_busqueda):
-    return 
+    """
+    Objetivo: Busca un viaje por su codigo y lo devuelve.
+    """
+    return viajes.get(id_busqueda) 
 
 
