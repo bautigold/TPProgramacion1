@@ -3,8 +3,8 @@ from pasajeros import registrar_pasajero
 from reservas import hacer_reserva
 
 def menu():
-    viajes = []
-    pasajeros = []
+    viajes = {}
+    pasajeros = {}
     reservas = []
     recorre = True
 
