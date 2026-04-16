@@ -25,7 +25,18 @@ def cargar_viaje(viajes):
     
 
 def mostrar_viajes(viajes):
-    return
+    """
+    Objetivo: Mostrar por pantalla los viajes cargados.
+    Entrada:
+    Salida:
+    """
+    if not viajes:
+        print("No hay viajes cargados.")
+    else:
+        print("\n--- Listado de Viajes ---")
+        for viajeCod, datos in viajes.items():
+            print(f"Codigo: {viajeCod} | Destino: {datos['destino']} | Fecha: {datos['fecha']} | "
+                f"Precio: ${datos['precio']} | Plazas: {datos['plazas']}")
 
 def buscar_viaje(viajes, id_busqueda):
     return 
