@@ -18,7 +18,7 @@ def menu():
         print("5. Mostrar pasajeros")
         print("6. Salir")
         
-        opcion = int(input("Opción: "))
+        opcion = input("Opción: ")
         
         if opcion == "1":
             cargar_viaje(viajes)
