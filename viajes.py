@@ -1,13 +1,12 @@
 def cargar_viaje(viajes):
     """
-    Objetivo: Cargar datos de un nuevo viaje y agregarlo 
-    Entrada: 
-    Salida: 
+    Objetivo: Cargar datos de un nuevo viaje
+    Entrada:
+    Salida:
     """
-    viajeCod = input("Ingrese el codigo del viaje: ")
-    
+    viajeCod = input("Ingrese el código del viaje: ")
     if viajeCod in viajes:
-        print("El codigo ya fue cargado antes.")
+        print("Ese código ya fue cargado antes.")
         return
 
     destino = input("Ingrese el destino: ")
@@ -19,29 +18,30 @@ def cargar_viaje(viajes):
         "destino": destino,
         "fecha": fecha,
         "precio": precio,
-        "plazas": asientos
+        "asientos": asientos 
     }
-    print(f"Viaje a {destino} cargado con éxito.")
-    
+    print(f"Viaje a {destino} cargado")
+
 
 def mostrar_viajes(viajes):
     """
-    Objetivo: Mostrar por pantalla los viajes cargados.
+    Objetivo: Mostrar los viajes cargados
     Entrada:
     Salida:
     """
     if not viajes:
-        print("No hay viajes cargados.")
+        print("No hay viajes cargados")
     else:
-        print("\n--- Listado de Viajes ---")
-        for viajeCod, datos in viajes.items():
-            print(f"Codigo: {viajeCod} | Destino: {datos['destino']} | Fecha: {datos['fecha']} | "
-                f"Precio: ${datos['precio']} | Plazas: {datos['plazas']}")
+        print("\nListado de Viajes")
+        for codigo, datos in viajes.items():
+            print(f"Código: {codigo}  Destino: {datos['destino']}  Asientos: {datos['asientos']}")
 
-def buscar_viaje(viajes, id_busqueda):
+
+
+def buscar_viaje(viajes, viajeCod):
     """
-    Objetivo: Busca un viaje por su codigo y lo devuelve.
+    Objetivo: Busca un viaje por su código
+    Entrada:
+    Salida:
     """
-    return viajes.get(id_busqueda) 
-
-
+    return viajes.get(viajeCod)

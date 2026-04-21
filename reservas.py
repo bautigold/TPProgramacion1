@@ -2,24 +2,36 @@ from viajes import buscar_viaje
 from pasajeros import buscar_pasajero
 
 def hacer_reserva(viajes, pasajeros, reservas):
-    id_viaje = input("Ingrese el ID del viaje: ")
-    viaje = buscar_viaje(viajes, id_viaje)
-    
+    """
+    Objetivo: Realizar la reserva 
+    Entrada:
+    Salida:
+    """
+    viajeCod = input("Ingrese el código del viaje: ")
+    viaje = buscar_viaje(viajes, viajeCod)
+
     if not viaje:
         print("Viaje no encontrado.")
         return
+
     
-    id_pasajero = input("Ingrese el ID del pasajero: ")
-    pasajero = buscar_pasajero(pasajeros, id_pasajero)
-    
-    if not pasajero:
-        print("Pasajero no encontrado.")
+    if viaje['asientos'] <= 0:
+        print("No hay asientos libres para este viaje.")
         return
-    
+
+    dni = input("Ingrese el DNI del pasajero: ")
+    pasajero = buscar_pasajero(pasajeros, dni)
+
+    if not pasajero:
+        print("Pasajero no encontrado")
+        return
+
     reserva = {
-        'id_viaje': id_viaje,
-        'id_pasajero': id_pasajero
+        'viajeCod': viajeCod,
+        'dni': dni
     }
     
     reservas.append(reserva)
-    print("Reserva realizada con éxito.")
+    
+    viaje['asientos'] -= 1
+    print(f"Reserva realizada. Asientos libres: {viaje['asientos']}")
