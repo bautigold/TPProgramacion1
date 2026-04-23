@@ -10,7 +10,7 @@ def menu():
     recorre = True
     
     while recorre:
-        print("\n SISTEMA DE GESTIÓN DE VIAJES ")
+        print(" SISTEMA DE GESTIÓN DE VIAJES ")
         print("1. Cargar viaje")
         print("2. Registrar pasajero")
         print("3. Hacer reserva")

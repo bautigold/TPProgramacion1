@@ -32,9 +32,9 @@ def mostrar_viajes(viajes):
     if not viajes:
         print("No hay viajes cargados")
     else:
-        print("\nListado de Viajes")
+        print("Listado de Viajes")
         for codigo, datos in viajes.items():
-            print(f"Código: {codigo}  Destino: {datos['destino']}  Asientos: {datos['asientos']}")
+            print(f"Código: {codigo}  Destino: {datos['destino']}  Asientos: {datos['asientos']}   Precio: {datos['precio']} ")
 
 
 

@@ -40,6 +40,6 @@ def mostrar_pasajeros(pasajeros):
     if not pasajeros:
         print("No hay pasajeros aún")
         return
-    print("\nListado de Pasajeros")
+    print("Listado de Pasajeros")
     for dni, datos in pasajeros.items():
         print(f"DNI: {dni}  Nombre: {datos['nombre']} {datos['apellido']}")
