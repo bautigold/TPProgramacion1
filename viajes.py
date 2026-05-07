@@ -45,3 +45,12 @@ def buscar_viaje(viajes, viajeCod):
     Salida:
     """
     return viajes.get(viajeCod)
+
+
+
+
+def obtener_viajes_disponibles(viajes):
+    """
+    Objetivo: Devolver solo viajes que no estén completos 
+    """
+    return list(filter(lambda item: item[16]['asientos_libres'] > 0, viajes.items()))

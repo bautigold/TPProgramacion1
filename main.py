@@ -17,13 +17,18 @@ def menu():
         print("4. Mostrar viajes")
         print("5. Mostrar pasajeros")
         print("6. Salir")
+        print("7. Ver últimas 3 reservas")
         
         opcion = input("Opción: ")
         
         if opcion == "1":
             cargar_viaje(viajes)
         elif opcion == "2":
-            registrar_pasajero(pasajeros)
+            dni = input("DNI: ")
+            if auxiliar.validar_dni(dni): 
+                registrar_pasajero(pasajeros, dni)
+            else:
+                print("DNI inválido.")
         elif opcion == "3":
             hacer_reserva(viajes, pasajeros, reservas)
         elif opcion == "4":
@@ -32,6 +37,9 @@ def menu():
             mostrar_pasajeros(pasajeros)
         elif opcion == "6":
             recorre = False  
+        elif opcion == "7":
+            ultimas = reservas[-3:] 
+            print(f"Historial reciente: {ultimas}")
         else:
             print("Opción no válida.")
 

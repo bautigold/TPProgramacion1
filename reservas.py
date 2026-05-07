@@ -35,3 +35,12 @@ def hacer_reserva(viajes, pasajeros, reservas):
     
     viaje['asientos'] -= 1
     print(f"Reserva realizada. Asientos libres: {viaje['asientos']}")
+
+
+def aplicar10off(viajes):
+    """
+    Objetivo: Aplicar 10% de descuento a todos los viajes 
+    """
+    for cod in viajes:
+        viajes[cod]['precio'] *= 0.9
+    print("¡Descuento aplicado con éxito!")
