@@ -1,40 +1,31 @@
-from viajes import buscar_viaje
-from pasajeros import buscar_pasajero
+from functools import reduce
 
-def hacer_reserva(viajes, pasajeros, reservas):
-    """
-    Objetivo: Realizar la reserva 
-    Entrada:
-    Salida:
-    """
-    viajeCod = input("Ingrese el código del viaje: ")
-    viaje = buscar_viaje(viajes, viajeCod)
-
-    if not viaje:
-        print("Viaje no encontrado.")
+def hacer_reserva(viajes, pasajeros, reservas, dni, cod_viaje):
+    viaje = viajes.get(cod_viaje)
+    if not viaje or viaje['asientos_libres'] == 0:
+        print("Viaje no disponible o completo.")
         return
 
+    print("Mapa de asientos (0:Libre, 1:Ocupado):")
+    for i, fila in range(len((viaje['mapa']))):
+        fila = viaje["mapa"][i]
+        print(f"Fila {i}: {fila}")
     
-    if viaje['asientos'] <= 0:
-        print("No hay asientos libres para este viaje.")
-        return
+    try:
+        fila = int(input("Elija fila (0-4): "))
+        columna = int(input("Elija columna (0-3): "))
+        
+        if viaje['mapa'][fila][columna] == 0:
+            viaje['mapa'][fila][columna] = 1 
+            viaje['asientos_libres'] -= 1
+            reserva = {"dni": dni, "viaje": cod_viaje, "asiento": (fila, columna), "monto": viaje['precio']}
+            reservas.append(reserva)
+            print("¡Reserva confirmada!")
+        else:
+            print("Asiento ya ocupado.")
+    except:
+        print("Error: Selección de asiento inválida.")
 
-    dni = input("Ingrese el DNI del pasajero: ")
-    pasajero = buscar_pasajero(pasajeros, dni)
-
-    if not pasajero:
-        print("Pasajero no encontrado")
-        return
-
-    reserva = {
-        'viajeCod': viajeCod,
-        'dni': dni
-    }
-    
-    reservas.append(reserva)
-    
-    viaje['asientos'] -= 1
-    print(f"Reserva realizada. Asientos libres: {viaje['asientos']}")
 
 
 def aplicar10off(viajes):
