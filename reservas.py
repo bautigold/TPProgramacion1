@@ -27,11 +27,13 @@ def hacer_reserva(viajes, pasajeros, reservas, dni, cod_viaje):
         print("Error: Selección de asiento inválida.")
 
 
-
-def aplicar10off(viajes):
-    """
-    Objetivo: Aplicar 10% de descuento a todos los viajes 
-    """
+def aplicar_descuento_masivo(viajes):
     for cod in viajes:
-        viajes[cod]['precio'] *= 0.9
-    print("¡Descuento aplicado con éxito!")
+        viajes[cod]['precio'] = (lambda p: p * 0.9)(viajes[cod]['precio'])
+    print("Se aplicó un 10% de descuento a todos los viajes.")
+
+def calcular_recaudacion_total(reservas):
+    if not reservas: return 0
+    total = reduce(lambda acumulado, res: acumulado + res['monto'], reservas, 0)
+    return total
+
