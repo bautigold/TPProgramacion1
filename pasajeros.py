@@ -1,45 +1,41 @@
-def registrar_pasajero(pasajeros):
+from auxiliar import *
+
+def registrar_pasajero(pasajeros, dni):
     """
-    Objetivo: Registrar un pasajero
-    Entrada:
-    Salida:
+    Objetivo: Registrar un nuevo pasajero en el sistema
     """
-    dni = input("Ingrese el DNI del pasajero: ")
-    
     if dni in pasajeros:
-        print("Ya existe un pasajero con ese DNI")
-        return
-
-    nombre = input("Ingrese el nombre: ")
-    apellido = input("Ingrese el apellido: ")
-    contacto = input("Ingrese Email o telefono: ")
-
+        print("El pasajero ya está registrado.")
+        return pasajeros[dni]
+    
+    nombre = normalizar_texto(input("Ingrese nombre: "))
+    apellido = normalizar_texto(input("Ingrese apellido: "))
+    contacto = input("Ingrese medio de contacto (Email/Tel): ")
+    identidad = (nombre, apellido) 
+    
     pasajeros[dni] = {
-        "nombre": nombre,
-        "apellido": apellido,
+        "identidad": identidad,
         "contacto": contacto
     }
-    print(f"Pasajero {nombre} {apellido} registrado.")
-
+    
+    print(f"Pasajero {nombre} {apellido} registrado con éxito.")
+    return pasajeros[dni]
 
 def buscar_pasajero(pasajeros, dni):
     """
-    Objetivo: Buscar un pasajero por su DNI
-    Entrada: 
-    Salida:
+    Objetivo: Buscar un pasajero específico por su DNI.
     """
     return pasajeros.get(dni)
 
-
 def mostrar_pasajeros(pasajeros):
     """
-    Objetivo: Mostrar todos los pasajeros
-    Entrada:
-    Salida:
+    Objetivo: Mostrar el listado completo de pasajeros
     """
     if not pasajeros:
-        print("No hay pasajeros aún")
+        print("No hay pasajeros registrados.")
         return
-    print("Listado de Pasajeros")
+    
+    print("\nLISTADO DE PASAJEROS REGISTRADOS")
     for dni, datos in pasajeros.items():
-        print(f"DNI: {dni}  Nombre: {datos['nombre']} {datos['apellido']}")
+        nombre, apellido = datos['identidad'] 
+        print(f"DNI: {dni} | Pasajero: {apellido}, {nombre} | Contacto: {datos['contacto']}")
