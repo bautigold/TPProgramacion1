@@ -48,19 +48,21 @@ def mostrar_viajes(viajes):
     
 
 
-def buscar_viaje(viajes, cod):
-    """
-    Objetivo: Buscar un viaje específico por su clave única.
-    """
-    return viajes.get(cod)
+def mostrar_mapa_asientos(viaje):
+    print(f"\nMapa de asientos para: {viaje['destino']}")
+    matriz = viaje["matriz_asientos"]
+    
+    for fila in range(len(matriz)):
+        print(f"Fila {fila}: {matriz[fila]}")
+    print("(0 = Libre, 1 = Ocupado)")
 
 def obtener_destinos_unicos(viajes):
-    """
-    Objetivo: Obtener un reporte de ciudades sin repeticiones (Alcance 100%).
-    """
     destinos = {datos['destino'] for datos in viajes.values()}
-    print(f"Ciudades cubiertas actualmente: {destinos}")
+    print(f"\nDestinos cubiertos: {destinos}")
     return destinos
+
+
+
 
 def obtener_viajes_disponibles(viajes):
     """
