@@ -2,58 +2,51 @@ from auxiliar import *
 CATEGORIAS = ("Económico", "Business", "Primera Clase")
 
 def cargar_viaje(viajes):
-    """
-    Objetivo: Registrar un nuevo viaje en la base de datos (Hito 40/100%).
-    """
+    print("\n REGISTRO DE NUEVO VIAJE ")    
     try:
-        print("\nREGISTRO DE NUEVO VIAJE")
-        viajeCod = input("Ingrese el código del viaje (Ej: AR101): ").upper()
-        
-        if not validar_codigo_viaje(viajeCod):
-            print("Error: Formato de código inválido (debe ser 2 letras y 3 números).")
+        codigo = input("Ingrese el código del viaje (Ej: AR101): ").upper()        
+        if not validar_codigo_viaje(codigo):
+            print("Error: Formato de código inválido.")
             return
-        
-        if viajeCod in viajes:
-            print("Error: El código de viaje ya existe.")
+        if codigo in viajes:
+            print(f"El código {codigo} ya existe.")
             return
-
-        destino = normalizar_texto(input("Ingrese el destino: "))
-        precio = float(input("Ingrese el precio del pasaje: "))
-        
-        print("Seleccione la categoría del transporte:")
-        for i in range(len(CATEGORIAS)): 
-            print(f"{i} {CATEGORIAS[i]}")
-        
-        opcion_cat = int(input("Opción: "))
-        categoria = CATEGORIAS[opcion_cat]
-
-        mapa_asientos = [[0 for columna in range(4)] for fila in range(5)]
-        
-        viajes[viajeCod] = {
+        destino = normalizar_texto(input("Ingrese Ciudad de Destino: "))
+        precio = leer_float("Ingrese el precio del pasaje: ")
+        print("Categorías disponibles:")
+        for i in range(len(CATEGORIAS)):
+            print(f"{i} - {CATEGORIAS[i]}")        
+        idCat = leer_entero("Seleccione el número de categoría: ")
+        if idCat < 0 or idCat >= len(CATEGORIAS):
+            print("Categoría inexistente. Se asignará 'Económico' por defecto.")
+            cat_seleccionada = CATEGORIAS
+        else:
+            cat_seleccionada = CATEGORIAS[idCat]
+        asientos = [[0 for columna in range(4)] for fila in range(5)]        
+        viajes[codigo] = {
             "destino": destino,
             "precio": precio,
-            "categoria": categoria,
-            "mapa": mapa_asientos,
-            "asientos_libres": 20
+            "categoria": cat_seleccionada,
+            "matriz_asientos": asientos,
+            "libres": 20
         }
-        print(f"¡Viaje a {destino} ({categoria}) cargado exitosamente!")
-        
-    except ValueError:
-        print("Error: El precio y la opción deben ser valores numéricos.")
-    except IndexError:
-        print("Error: La opción de categoría seleccionada está fuera de rango.")
+        guardar_datos(viajes, "viajes.json")
+        print(f"Viaje a {destino} cargado con éxito.")
+    except Exception as e:
+        print(f"Error al cargar el viaje: {e}")
+
+
 
 def mostrar_viajes(viajes):
-    """
-    Objetivo: Mostrar todos los viajes registrados con f-strings [15].
-    """
     if not viajes:
-        print("No hay viajes registrados en el sistema.")
+        print("\nNo hay viajes registrados.")
         return
-    else:    
-        print("\nLISTADO DE VIAJES")
-        for cod, datos in viajes.items():
-            print(f"[{cod}] {datos['destino']} | Cat: {datos['categoria']} | Precio: ${datos['precio']:.2f} | Libres: {datos['asientos_libres']}")
+    print("\n LISTADO DE VIAJES ")
+    for cod, datos in viajes.items():
+        linea = f"CÓDIGO: {cod} - DESTINO: {datos['destino']} - PRECIO: ${datos['precio']:.2f} - LIBRES: {datos['libres']}"
+        print(linea)
+    
+
 
 def buscar_viaje(viajes, cod):
     """
