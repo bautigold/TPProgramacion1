@@ -1,41 +1,54 @@
 from auxiliar import *
 
-def registrar_pasajero(pasajeros, dni):
-    """
-    Objetivo: Registrar un nuevo pasajero en el sistema
-    """
+def registrar_pasajero(pasajeros):
+    print("\n REGISTRO DE PASAJERO ")
+    dni = input("Ingrese el DNI (sin puntos): ")
+    if not validar_dni(dni):
+        print("Error: Formato de DNI incorrecto.")
+        return
     if dni in pasajeros:
-        print("El pasajero ya está registrado.")
-        return pasajeros[dni]
-    
-    nombre = normalizar_texto(input("Ingrese nombre: "))
-    apellido = normalizar_texto(input("Ingrese apellido: "))
-    contacto = input("Ingrese medio de contacto (Email/Tel): ")
-    identidad = (nombre, apellido) 
-    
+        print(f"El pasajero con DNI {dni} ya existe.")
+        return
+    nombre = normalizar_texto(input("Nombre: "))
+    apellido = normalizar_texto(input("Apellido: "))
+    identidad = (nombre, apellido)     
+    edad = leer_entero("Edad: ")
+    celular = input("Teléfono: ")
     pasajeros[dni] = {
         "identidad": identidad,
-        "contacto": contacto
+        "edad": edad,
+        "contacto": celular
     }
-    
-    print(f"Pasajero {nombre} {apellido} registrado con éxito.")
-    return pasajeros[dni]
+    guardar_datos(pasajeros, "pasajeros.json")
+    print(f"Pasajero {apellido} registrado con éxito.")
 
-def buscar_pasajero(pasajeros, dni):
-    """
-    Objetivo: Buscar un pasajero específico por su DNI.
-    """
-    return pasajeros.get(dni)
+def buscar_pasajero(pasajeros):
+    dni = input("DNI a buscar: ")
+    datos = pasajeros.get(dni)
+    if datos:
+        nombre, apellido = datos["identidad"]
+        print(f"\nResultado: {apellido}, {nombre}")
+        print(f"Edad: {datos['edad']} - Contacto: {datos['contacto']}")
+        return datos
+    else:
+        print("No se encontró el DNI ingresado.")
+        return None
 
 def mostrar_pasajeros(pasajeros):
-    """
-    Objetivo: Mostrar el listado completo de pasajeros
-    """
     if not pasajeros:
-        print("No hay pasajeros registrados.")
+        print("\nNo hay pasajeros registrados.")
         return
-    
-    print("\nLISTADO DE PASAJEROS REGISTRADOS")
-    for dni, datos in pasajeros.items():
-        nombre, apellido = datos['identidad'] 
-        print(f"DNI: {dni} | Pasajero: {apellido}, {nombre} | Contacto: {datos['contacto']}")
+    print("\n LISTADO DE PASAJEROS ")
+    for dni, info in pasajeros.items():
+        nombre, apellido = info["identidad"]
+        linea = f"DNI: {dni} - Pasajero: {apellido}, {nombre} - Edad: {info['edad']}"
+        print(linea)
+
+def eliminar_pasajero(pasajeros):
+    dni = input("DNI del pasajero a eliminar: ")
+    if dni in pasajeros:
+        del pasajeros[dni]
+        guardar_datos(pasajeros, "pasajeros.json")
+        print("Registro eliminado.")
+    else:
+        print("El DNI no existe en el sistema.")
