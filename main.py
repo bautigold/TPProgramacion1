@@ -1,73 +1,43 @@
+from auxiliar import *
 from viajes import *
 from pasajeros import *
 from reservas import *
-from auxiliar import *
 
-def menu():
-    viajes = {}
-    pasajeros = {}
-    reservas = []
-    bandera = True
+def main():
+    dicViajes = cargar_datos("viajes.json", {})
+    dicPasajeros = cargar_datos("pasajeros.json", {})
+    dicReservas = cargar_datos("reservas.json", [])
+    continuar = True
+    while continuar:
+        print("\n SISTEMA UADE VIAJES ")
+        print("1. Viajes (Cargar / Mostrar)")
+        print("2. Pasajeros (Registrar / Mostrar)")
+        print("3. Reservas (Nueva / Mostrar)")
+        print("4. Reporte de Recaudación")
+        print("0. Salir y Guardar")
+        opcion = leer_entero("Opción: ")
+        if opcion == 1:
+            segundaOpcion = input("a. Cargar / b. Mostrar: ").lower()
+            if segundaOpcion == "a": cargar_viaje(dicViajes)
+            elif segundaOpcion == "b": mostrar_viajes(dicViajes)
+        elif opcion == 2:
+            segundaOpcion = input("a. Registrar / b. Mostrar: ").lower()
+            if segundaOpcion == "a": registrar_pasajero(dicPasajeros)
+            elif segundaOpcion == "b": mostrar_pasajeros(dicPasajeros)
+        elif opcion == 3:
+            segundaOpcion = input("a. Nueva Reserva / b. Mostrar Historial: ").lower()
+            if segundaOpcion == "a": realizar_reserva(dicViajes, dicPasajeros, dicReservas)
+            elif segundaOpcion == "b": mostrar_reservas(dicReservas)
+        elif opcion == 4:
+            calcular_recaudacion(dicReservas)
+        elif opcion == 0:
+            print("Guardando y saliendo...")
+            guardar_datos(dicViajes, "viajes.json")
+            guardar_datos(dicPasajeros, "pasajeros.json")
+            guardar_datos(dicReservas, "reservas.json")
+            continuar = False
+        else:
+            print("Opción no válida.")
 
-    while bandera:
-        print("SISTEMA DE GESTIÓN DE VIAJES")
-        print("1. Cargar Nuevo Viaje")
-        print("2. Mostrar Todos los Viajes")
-        print("3. Realizar una Reserva")
-        print("4. Aplicar Hot Sale (10% OFF)")
-        print("5. Ver Últimas 3 Reservas (Historial)")
-        print("6. Calcular Recaudación Total")
-        print("7. Ver Listado de Pasajeros")
-        print("8. Salir")
-        
-        try:
-            opcion = input("Seleccione una opción: ")
-            
-            if opcion == "1":
-                cargar_viaje(viajes)
-            
-            elif opcion == "2":
-                mostrar_viajes(viajes)
-                obtener_destinos_unicos(viajes) 
+main()
 
-            elif opcion == "3":
-                dni = input("Ingrese DNI del pasajero: ")
-                if validar_dni(dni):
-                    pasajero = registrar_pasajero(pasajeros, dni)
-                    
-                    mostrar_viajes(viajes)
-                    cod = input("Ingrese el código del viaje para reservar: ").upper()
-                    
-                    hacer_reserva(viajes, pasajeros, reservas, dni, cod)
-                else:
-                    print("Error: El DNI debe tener 7 u 8 dígitos numéricos.")
-            
-            elif opcion == "4":
-                aplicar_descuento_masivo(viajes)
-            
-            elif opcion == "5":
-                ultimas = reservas[-3:]
-                if not ultimas:
-                    print("No hay reservas registradas aún.")
-                else:
-                    print(f"ÚLTIMAS RESERVAS")
-                    for r in ultimas:
-                        print(f"Pasajero: {r['dni']} | Viaje: {r['viaje']} | Asiento: {r['asiento']}")
-            
-            elif opcion == "6":
-                total = calcular_recaudacion_total(reservas)
-                print(f"Recaudación Total Acumulada: ${total:.2f}")
-            
-            elif opcion == "7":
-                mostrar_pasajeros(pasajeros)
-                
-            elif opcion == "8":
-                print("Saliendo del sistema... ¡Buen viaje!")
-                bandera = False
-            else:
-                print("Opción no válida. Por favor, intente de nuevo.")
-                
-        except Exception as e:
-            print(f"Ocurrió un error inesperado en el menú: {e}")
-
-menu()

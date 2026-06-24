@@ -68,3 +68,5 @@ def obtener_viajes_disponibles(viajes):
     if not viajes_con_cupo:
         print("No hay viajes con asientos disponibles.")
     return viajes_con_cupo
+
+
