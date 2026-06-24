@@ -1,39 +1,67 @@
 from functools import reduce
+from auxiliar import *
+from viajes import mostrar_mapa_asientos
 
-def hacer_reserva(viajes, pasajeros, reservas, dni, cod_viaje):
-    viaje = viajes.get(cod_viaje)
-    if not viaje or viaje['asientos_libres'] == 0:
-        print("Viaje no disponible o completo.")
+
+def realizar_reserva(viajes, pasajeros, reservas):
+    print("\n NUEVA RESERVA ")    
+    dni = input("Ingrese el DNI del pasajero: ")
+    if dni not in pasajeros:
+        print("Error: El pasajero no está registrado. Debe cargarlo primero.")
         return
-
-    print("Mapa de asientos (0:Libre, 1:Ocupado):")
-    for i, fila in range(len((viaje['mapa']))):
-        fila = viaje["mapa"][i]
-        print(f"Fila {i}: {fila}")
-    
+    codigo = input("Ingrese el código del viaje: ").upper()
+    if codigo not in viajes:
+        print("Error: El viaje ingresado no existe.")
+        return
+    viaje = viajes[codigo]
+    if viaje["libres"] == 0:
+        print(f"Lo sentimos, el viaje a {viaje['destino']} está completo.")
+        return
+    mostrar_mapa_asientos(viaje)    
+    print("\nSeleccione su asiento:")
+    fila = leer_entero("Ingrese numero de fila (0-4): ")
+    columna = leer_entero("Ingrese numero de columna (0-3): ")
+    if (fila < 0 or fila > 4) or (columna < 0 or columna > 3):
+        print("Error: Coordenadas de asiento fuera de rango.")
+        return
+    if viaje["matriz_asientos"][fila][columna] == 1:
+        print("Error: Ese asiento ya se encuentra ocupado.")
+        return
     try:
-        fila = int(input("Elija fila (0-4): "))
-        columna = int(input("Elija columna (0-3): "))
-        
-        if viaje['mapa'][fila][columna] == 0:
-            viaje['mapa'][fila][columna] = 1 
-            viaje['asientos_libres'] -= 1
-            reserva = {"dni": dni, "viaje": cod_viaje, "asiento": (fila, columna), "monto": viaje['precio']}
-            reservas.append(reserva)
-            print("¡Reserva confirmada!")
-        else:
-            print("Asiento ya ocupado.")
-    except:
-        print("Error: Selección de asiento inválida.")
+        viaje["matriz_asientos"][fila][columna] = 1
+        viaje["libres"] -= 1
+        nombre, apellido = pasajeros[dni]["identidad"]
+        nueva_reserva = {
+            "dni": dni,
+            "pasajero": f"{apellido}, {nombre}",
+            "viaje": codigo,
+            "destino": viaje["destino"],
+            "asiento": (fila, columna), 
+            "monto": viaje["precio"]
+        }
+        reservas.append(nueva_reserva)
+        guardar_datos(viajes, "viajes.json")
+        guardar_datos(reservas, "reservas.json")        
+        print(f"Reserva confirmada para {nombre} {apellido} en el asiento ({fila},{columna}).")
+    except Exception as e:
+        print(f"Error al procesar la reserva: {e}")
 
-
-def aplicar_descuento_masivo(viajes):
-    for cod in viajes:
-        viajes[cod]['precio'] = (lambda p: p * 0.9)(viajes[cod]['precio'])
-    print("Se aplicó un 10% de descuento a todos los viajes.")
+def mostrar_reservas(reservas):
+    if not reservas:
+        print("\nNo hay reservas registradas en el sistema.")
+        return
+    print("\n LISTADO DE RESERVAS ")
+    for res in reservas:
+        f, c = res["asiento"]
+        linea = f"Pasajero: {res['pasajero']} - Destino: {res['destino']} - Asiento: F{f}-C{c} - Monto: ${res['monto']:.2f}"
+        print(linea)
 
 def calcular_recaudacion_total(reservas):
-    if not reservas: return 0
-    total = reduce(lambda acumulado, res: acumulado + res['monto'], reservas, 0)
+    if not reservas:
+        return 0.0
+    montos = [res["monto"] for res in reservas]
+    total = reduce(lambda acumulado, actual: acumulado + actual, montos)    
+    print(f"\nRecaudación total del sistema: ${total:.2f}")
     return total
+
 
