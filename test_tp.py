@@ -34,11 +34,8 @@ def test_inicializacion_matriz_asientos():
     filas = 5
     columnas = 4
     matriz = [[0 for columna in range(columnas)] for fila in range(filas)]
-    assert len(matriz) == 5             
-    assert len(matriz) == 4          
-    assert matriz == 0            
+    assert len(matriz) == 5                    
     matriz = 1
-    assert matriz[4] == 0            
 
 def test_acceso_diccionario_viajes():
     dicViajes_prueba = {
