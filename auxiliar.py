@@ -25,13 +25,13 @@ def guardar_datos(datos, nombre_archivo):
     except Exception as e:
         print(f"Ocurrió un error al guardar: {e}")
 
-def cargar_datos(nombre_archivo, estructura_defecto):
+def cargar_datos(nombre_archivo):
     ruta = obtener_ruta(nombre_archivo)
     try:
         with open(ruta, "r") as archivo:
             return json.load(archivo)
     except Exception as e:
-        return estructura_defecto
+        print(f"Ocurrió un error al cargar: {e}")
 
 def leer_entero(mensaje):
     while True:
