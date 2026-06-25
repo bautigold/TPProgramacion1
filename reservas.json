@@ -1,0 +1,24 @@
+[
+    {
+        "dni": "47162493",
+        "pasajero": "Rodriguez, Joaquin",
+        "viaje": "AR101",
+        "destino": "Bariloche",
+        "asiento": [
+            2,
+            2
+        ],
+        "monto": 250000.0
+    },
+    {
+        "dni": "47162493",
+        "pasajero": "Rodriguez, Joaquin",
+        "viaje": "AR101",
+        "destino": "Bariloche",
+        "asiento": [
+            0,
+            1
+        ],
+        "monto": 250000.0
+    }
+]

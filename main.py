@@ -29,7 +29,7 @@ def main():
             if segundaOpcion == "a": realizar_reserva(dicViajes, dicPasajeros, dicReservas)
             elif segundaOpcion == "b": mostrar_reservas(dicReservas)
         elif opcion == 4:
-            calcular_recaudacion(dicReservas)
+            calcular_recaudacion_total(dicReservas)
         elif opcion == 0:
             print("Guardando y saliendo...")
             guardar_datos(dicViajes, "viajes.json")
@@ -40,4 +40,6 @@ def main():
             print("Opción no válida.")
 
 main()
+
+
 
