@@ -4,9 +4,9 @@ from pasajeros import *
 from reservas import *
 
 def main():
-    dicViajes = cargar_datos("viajes.json", {})
-    dicPasajeros = cargar_datos("pasajeros.json", {})
-    dicReservas = cargar_datos("reservas.json", [])
+    dicViajes = cargar_datos("viajes.json")
+    dicPasajeros = cargar_datos("pasajeros.json")
+    dicReservas = cargar_datos("reservas.json")
     continuar = True
     while continuar:
         print("\n SISTEMA UADE VIAJES ")
