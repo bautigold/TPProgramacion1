@@ -19,7 +19,7 @@ def cargar_viaje(viajes):
         idCat = leer_entero("Seleccione el número de categoría: ")
         if idCat < 0 or idCat >= len(CATEGORIAS):
             print("Categoría inexistente. Se asignará 'Económico' por defecto.")
-            cat_seleccionada = CATEGORIAS
+            cat_seleccionada = CATEGORIAS[0]
         else:
             cat_seleccionada = CATEGORIAS[idCat]
         asientos = [[0 for columna in range(4)] for fila in range(5)]        
@@ -63,7 +63,7 @@ def obtener_destinos_unicos(viajes):
 
 
 def obtener_viajes_disponibles(viajes):
-    viajes_con_cupo = list(filter(lambda item: item[10]['libres'] > 0, viajes.items()))
+    viajes_con_cupo = list(filter(lambda item: item[1]["libres"] > 0, viajes.items()))
     
     if not viajes_con_cupo:
         print("No hay viajes con asientos disponibles.")
