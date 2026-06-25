@@ -62,11 +62,3 @@ def obtener_destinos_unicos(viajes):
     return destinos
 
 
-def obtener_viajes_disponibles(viajes):
-    viajes_con_cupo = list(filter(lambda item: item[1]["libres"] > 0, viajes.items()))
-    
-    if not viajes_con_cupo:
-        print("No hay viajes con asientos disponibles.")
-    return viajes_con_cupo
-
-
