@@ -47,7 +47,6 @@ def mostrar_viajes(viajes):
         print(linea)
     
 
-
 def mostrar_mapa_asientos(viaje):
     print(f"\nMapa de asientos para: {viaje['destino']}")
     matriz = viaje["matriz_asientos"]
@@ -55,10 +54,5 @@ def mostrar_mapa_asientos(viaje):
     for fila in range(len(matriz)):
         print(f"Fila {fila}: {matriz[fila]}")
     print("(0 = Libre, 1 = Ocupado)")
-
-def obtener_destinos_unicos(viajes):
-    destinos = {datos['destino'] for datos in viajes.values()}
-    print(f"\nDestinos cubiertos: {destinos}")
-    return destinos
 
 
