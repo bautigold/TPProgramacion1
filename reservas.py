@@ -43,8 +43,16 @@ def realizar_reserva(viajes, pasajeros, reservas):
         guardar_datos(viajes, "viajes.json")
         guardar_datos(reservas, "reservas.json")        
         print(f"Reserva confirmada para {nombre} {apellido} en el asiento ({fila},{columna}).")
+        pasaje=open("pasaje.txt", "w","r")
+        pasaje.write(nueva_reserva["pasajero"] + "\n")
+        print(pasaje.read())
+        print("Archivo de pasaje generado exitosamente.")
+        pasaje.close()
     except Exception as e:
         print(f"Error al procesar la reserva: {e}")
+
+    
+##Añade función de archivos para generar un pasaje
 
 def mostrar_reservas(reservas):
     if not reservas:
@@ -56,6 +64,7 @@ def mostrar_reservas(reservas):
         linea = f"Pasajero: {res['pasajero']} - Destino: {res['destino']} - Asiento: F{f}-C{c} - Monto: ${res['monto']:.2f}"
         print(linea)
 
+
 def calcular_recaudacion_total(reservas):
     if not reservas:
         return 0.0
@@ -65,3 +74,4 @@ def calcular_recaudacion_total(reservas):
     return total
 
 
+##Añade función para calcular la recaudación total del sistema usando funciones lambda y reduce.
